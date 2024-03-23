@@ -13,6 +13,7 @@ class TaskService(val linkWalker: LinkWalker) {
         taskCache[task.id] = task
 
         if (authToken != null) {
+            // TODO: Validate token
             task.token = authToken.replace("Bearer ", "")
             linkWalker.processTaskWithToken(task)
         } else {
