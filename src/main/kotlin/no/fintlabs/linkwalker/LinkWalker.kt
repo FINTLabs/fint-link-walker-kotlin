@@ -11,10 +11,20 @@ class LinkWalker {
 
         // Count Links that needs processing
 
+        // Process all links
+
     }
 
     fun processTaskWithClientName(task: Task) {
+        // Fetch client credentials through Kafka
 
+        // Fetch bearer token for client
+
+        // Perform request to task.url with token
+
+        // Count Links that needs processing
+
+        // Process all links
     }
 
 }
