@@ -18,4 +18,9 @@ class TaskController(val taskService: TaskService) {
         return ResponseEntity.accepted().body(task)
     }
 
+    @PutMapping
+    fun clearTasks() {
+        taskService.clearTasks()
+    }
+
 }

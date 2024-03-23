@@ -21,4 +21,8 @@ class TaskService(val linkWalker: LinkWalker) {
         }
     }
 
+    fun clearTasks() {
+        taskCache.clear()
+    }
+
 }
