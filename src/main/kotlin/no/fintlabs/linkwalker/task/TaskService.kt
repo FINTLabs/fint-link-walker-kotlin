@@ -16,7 +16,7 @@ class TaskService(val linkWalker: LinkWalker) {
         if (authToken != null) {
             // TODO: Validate token
             task.token = authToken.replace("Bearer ", "")
-            linkWalker.processTaskWithToken(task)
+            linkWalker.processTask(task)
         } else {
             task.org = organisation
             linkWalker.processTaskWithClientName(task)
