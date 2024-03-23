@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties("token")
-class Task(val url: String, var token: String? = null, var clientName: String? = null, var filter: List<String>? = null) {
+class Task(val url: String, var token: String = "", var clientName: String? = null, val filter: List<String>? = null) {
     var id: String = UUID.randomUUID().toString()
     var org: String? = null
     var status: Status = Status.STARTED
@@ -17,6 +17,7 @@ class Task(val url: String, var token: String? = null, var clientName: String? =
 enum class Status {
     STARTED,
     FETCHING_RESOURCES,
+    COUNTING_LINKS,
     PROCESSING_LINKS,
     COMPLETED,
     FAILED
