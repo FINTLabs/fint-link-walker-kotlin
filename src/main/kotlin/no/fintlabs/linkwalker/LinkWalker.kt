@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service
 class LinkWalker {
 
     fun processTaskWithToken(task: Task) {
+        // Perform request to task.url with task.token
+
+        // Count Links that needs processing
 
     }
 

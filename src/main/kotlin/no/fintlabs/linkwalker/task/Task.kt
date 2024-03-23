@@ -3,7 +3,7 @@ package no.fintlabs.linkwalker.task
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
-class Task(val url: String, var token: String? = null, var clientName: String? = null) {
+class Task(val url: String, var token: String? = null, var clientName: String? = null, var filter: List<String>? = null) {
     var org: String? = null
     var id: String = UUID.randomUUID().toString()
     var status: Status = Status.STARTED
