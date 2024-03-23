@@ -23,6 +23,10 @@ class TaskService(val linkWalker: LinkWalker) {
         }
     }
 
+    fun taskExists(id: String): Boolean {
+        return taskCache.containsKey(id)
+    }
+
     fun getTasks(): Collection<Task> {
         return taskCache.values
     }
