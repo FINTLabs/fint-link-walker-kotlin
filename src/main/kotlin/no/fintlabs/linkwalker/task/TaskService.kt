@@ -11,6 +11,7 @@ class TaskService(val linkWalker: LinkWalker) {
     fun startTask(task: Task, organisation: String, authToken: String?) {
         task.org = organisation
         taskCache[task.id] = task
+        Thread.sleep(5000)
 
         if (authToken != null) {
             // TODO: Validate token

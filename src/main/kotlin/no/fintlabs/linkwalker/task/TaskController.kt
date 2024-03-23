@@ -10,8 +10,8 @@ class TaskController(val taskService: TaskService) {
     @PostMapping
     fun postTask(@RequestBody task: Task,
                  @RequestHeader("x-org-id", required = true) organisation: String,
-                 @RequestHeader("Authorization") authToken: String?): ResponseEntity<Any> {
-        if (authToken == null || task.clientName == null) {
+                 @RequestHeader("Authorization", required = false) authToken: String?): ResponseEntity<Any> {
+        if (authToken == null && task.clientName == null) {
             return ResponseEntity.badRequest().body("Auth header or client name in body must be set")
         }
         taskService.startTask(task, organisation, authToken)
