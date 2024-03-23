@@ -12,6 +12,12 @@ class TaskController(val taskService: TaskService) {
         return ResponseEntity.ok(taskService.getTasks())
     }
 
+    @GetMapping("/{id}")
+    fun getTask(@PathVariable id: String): ResponseEntity<Task> {
+        val task: Task = taskService.getTask(id) ?: return ResponseEntity.notFound().build()
+        return ResponseEntity.ok(task)
+    }
+
     @PostMapping
     fun postTask(@RequestBody task: Task,
                  @RequestHeader("x-org-id", required = true) organisation: String,
