@@ -23,6 +23,10 @@ class TaskService(val linkWalker: LinkWalker) {
         }
     }
 
+    fun getTasks(): Collection<Task> {
+        return taskCache.values
+    }
+
     fun clearTasks() {
         taskCache.clear()
     }

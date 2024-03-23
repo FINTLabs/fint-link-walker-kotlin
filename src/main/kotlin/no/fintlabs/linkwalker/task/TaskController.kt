@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/tasks")
 class TaskController(val taskService: TaskService) {
 
+    @GetMapping
+    fun getTasks(): ResponseEntity<Collection<Task>> {
+        return ResponseEntity.ok(taskService.getTasks())
+    }
+
     @PostMapping
     fun postTask(@RequestBody task: Task,
                  @RequestHeader("x-org-id", required = true) organisation: String,
