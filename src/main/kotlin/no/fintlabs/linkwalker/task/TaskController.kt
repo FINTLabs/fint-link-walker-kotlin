@@ -7,17 +7,6 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/tasks")
 class TaskController(val taskService: TaskService) {
 
-    @GetMapping
-    fun getTasks(): ResponseEntity<Collection<Task>> {
-        return ResponseEntity.ok(taskService.getTasks())
-    }
-
-    @GetMapping("/{id}")
-    fun getTask(@PathVariable id: String): ResponseEntity<Task> {
-        val task: Task = taskService.getTask(id) ?: return ResponseEntity.notFound().build()
-        return ResponseEntity.ok(task)
-    }
-
     @PostMapping
     fun postTask(@RequestBody task: Task,
                  @RequestHeader("x-org-id", required = true) organisation: String,
@@ -27,6 +16,17 @@ class TaskController(val taskService: TaskService) {
         }
         taskService.startTask(task, organisation, authToken)
         return ResponseEntity.accepted().body(task)
+    }
+
+    @GetMapping
+    fun getTasks(): ResponseEntity<Collection<Task>> {
+        return ResponseEntity.ok(taskService.getTasks())
+    }
+
+    @GetMapping("/{id}")
+    fun getTask(@PathVariable id: String): ResponseEntity<Task> {
+        val task: Task = taskService.getTask(id) ?: return ResponseEntity.notFound().build()
+        return ResponseEntity.ok(task)
     }
 
     @PutMapping
