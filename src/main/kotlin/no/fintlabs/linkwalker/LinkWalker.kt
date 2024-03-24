@@ -1,5 +1,7 @@
 package no.fintlabs.linkwalker
 
+import no.fintlabs.linkwalker.report.EntryReport
+import no.fintlabs.linkwalker.request.Link
 import no.fintlabs.linkwalker.request.Request
 import no.fintlabs.linkwalker.request.RequestService
 import no.fintlabs.linkwalker.task.Status
@@ -22,35 +24,44 @@ class LinkWalker(val requestService: RequestService) {
         requestService.get(task.url, task.token)
                 .subscribe { request ->
                     run {
-                        val links = getLinks(task, request)
+                        val entryReports = createEntryReports(task, request)
                     }
                 }
 
         // Process all links
     }
 
-    fun getLinks(task: Task, request: Request): Set<String> {
-        task.status = Status.COUNTING_LINKS
-        val links: MutableSet<String> = HashSet()
+    fun createEntryReports(task: Task, request: Request): List<EntryReport> {
+        val entryReports: MutableList<EntryReport> = ArrayList()
+        task.status = Status.CREATING_ENTRY_REPORTS
 
         request._embedded._entries.forEach { entry ->
-            entry._links.forEach { (key, link) ->
-                if (task.filter != null) {
-                    if (task.filter.contains(key)) {
-                        link.forEach {
-                            links.add(it.href)
-                        }
-                    }
-                } else {
-                    link.forEach {
-                        links.add(it.href)
+            val entryReport = createEntryReport(task, entry._links["self"])
+            entryReports.add(entryReport)
+            entry._links.forEach { (key, links) ->
+                if (task.filter == null || task.filter.contains(key)) {
+                    links.forEach {
+                        entryReport.relationLinks.add(it.href)
                     }
                 }
             }
         }
 
-        task.requests.set(links.size)
-        return links
+        return entryReports
+    }
+
+    fun createEntryReport(task: Task, selfLinks: List<Link>?): EntryReport {
+        val entryReport = EntryReport()
+
+        selfLinks?.forEach {
+            entryReport.parentLinks.add(it.href)
+        }
+
+        if (task.filter != null) {
+            entryReport.validateSelfLinks = task.filter.contains("self")
+        }
+
+        return entryReport
     }
 
 }

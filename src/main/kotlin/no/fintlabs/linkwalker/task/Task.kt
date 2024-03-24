@@ -17,6 +17,7 @@ class Task(val url: String, var token: String = "", var clientName: String? = nu
 enum class Status {
     STARTED,
     FETCHING_RESOURCES,
+    CREATING_ENTRY_REPORTS,
     COUNTING_LINKS,
     PROCESSING_LINKS,
     COMPLETED,
