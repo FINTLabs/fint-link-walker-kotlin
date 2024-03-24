@@ -23,34 +23,45 @@ class LinkWalker(val requestService: RequestService) {
     fun processTask(task: Task) {
         task.status = Status.FETCHING_RESOURCES
         requestService.getRequest(task.url, task.token)
-                .subscribe { request ->
-                    run {
-                        val entryReports = createEntryReports(task, request)
-                        countRelationLinks(task, entryReports)
-                        processRelationLinks(task, entryReports)
-                    }
-                }
+                .subscribe(
+                        { request ->
+                            createEntryReports(task, request)
+                            countRelationLinks(task)
+                            processRelationLinks(task)
+                        },
+                        { _ ->
+                            task.status = Status.FAILED
+                        }
+                )
     }
 
-    fun processRelationLinks(task: Task, entryReports: List<EntryReport>) {
+    fun processRelationLinks(task: Task) {
         task.status = Status.PROCESSING_LINKS
 
-        entryReports.forEach { entryReport ->
+        if (task.entryReports.all { it.relationLinks.isEmpty() }) {
+            task.status = Status.COMPLETED
+            return
+        }
+
+        task.entryReports.forEach { entryReport ->
             entryReport.relationLinks.forEach { url ->
                 requestService.getStatus(url, task.token).subscribe { statusCode ->
                     task.requests.decrementAndGet()
                     if (statusCode.isError) {
                         entryReport.relationErrors.add(RelationError(url, statusCode))
                     }
+                    if (task.isCompleted()) {
+                        task.status = Status.COMPLETED
+                    }
                 }
             }
         }
     }
 
-    fun countRelationLinks(task: Task, entryReports: List<EntryReport>) {
+    fun countRelationLinks(task: Task) {
         task.status = Status.COUNTING_REQUESTS
 
-        entryReports.forEach {
+        task.entryReports.forEach {
             it.relationLinks.forEach { _ ->
                 task.requests.incrementAndGet()
             }
