@@ -6,10 +6,10 @@ class EntryReport {
 
     var parentLinks: MutableSet<String> = HashSet()
     var relationLinks: MutableSet<String> = HashSet()
-    var relationErrors: List<RelationError> = ArrayList()
+    var relationErrors: MutableList<RelationError> = ArrayList()
     var validateSelfLinks: Boolean = true
 
 }
 
-class RelationError(val relationLink: String, val httpStatusCode: HttpStatusCode, val errorMessage: String) {
+class RelationError(val relationLink: String, val httpStatusCode: HttpStatusCode) {
 }

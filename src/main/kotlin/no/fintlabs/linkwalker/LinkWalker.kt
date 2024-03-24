@@ -1,6 +1,7 @@
 package no.fintlabs.linkwalker
 
 import no.fintlabs.linkwalker.report.EntryReport
+import no.fintlabs.linkwalker.report.RelationError
 import no.fintlabs.linkwalker.request.Link
 import no.fintlabs.linkwalker.request.Request
 import no.fintlabs.linkwalker.request.RequestService
@@ -21,13 +22,29 @@ class LinkWalker(val requestService: RequestService) {
 
     fun processTask(task: Task) {
         task.status = Status.FETCHING_RESOURCES
-        requestService.get(task.url, task.token)
+        requestService.getRequest(task.url, task.token)
                 .subscribe { request ->
                     run {
                         val entryReports = createEntryReports(task, request)
                         countRelationLinks(task, entryReports)
+                        processRelationLinks(task, entryReports)
                     }
                 }
+    }
+
+    fun processRelationLinks(task: Task, entryReports: List<EntryReport>) {
+        task.status = Status.PROCESSING_LINKS
+
+        entryReports.forEach { entryReport ->
+            entryReport.relationLinks.forEach { url ->
+                requestService.getStatus(url, task.token).subscribe { statusCode ->
+                    task.requests.decrementAndGet()
+                    if (statusCode.isError) {
+                        entryReport.relationErrors.add(RelationError(url, statusCode))
+                    }
+                }
+            }
+        }
     }
 
     fun countRelationLinks(task: Task, entryReports: List<EntryReport>) {
