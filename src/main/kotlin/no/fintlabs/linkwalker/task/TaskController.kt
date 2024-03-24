@@ -28,9 +28,15 @@ class TaskController(val taskService: TaskService, val reportService: ReportServ
     }
 
     @GetMapping("/{id}")
-    fun getTask(@PathVariable id: String): ResponseEntity<List<String>> {
+    fun getTask(@PathVariable id: String): ResponseEntity<Map<String, Any>> {
         val task: Task = taskService.getTask(id) ?: return ResponseEntity.notFound().build()
-        return ResponseEntity.ok(task.relationErrors)
+
+        val responseMap = mapOf(
+                "size" to task.relationErrors.size,
+                "relationErrors" to task.relationErrors
+        )
+
+        return ResponseEntity.ok(responseMap)
     }
 
     @GetMapping("/{id}/download")
