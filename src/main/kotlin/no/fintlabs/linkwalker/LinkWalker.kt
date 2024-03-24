@@ -25,10 +25,19 @@ class LinkWalker(val requestService: RequestService) {
                 .subscribe { request ->
                     run {
                         val entryReports = createEntryReports(task, request)
+                        countRelationLinks(task, entryReports)
                     }
                 }
+    }
 
-        // Process all links
+    fun countRelationLinks(task: Task, entryReports: List<EntryReport>) {
+        task.status = Status.COUNTING_REQUESTS
+
+        entryReports.forEach {
+            it.relationLinks.forEach { _ ->
+                task.requests.incrementAndGet()
+            }
+        }
     }
 
     fun createEntryReports(task: Task, request: Request): List<EntryReport> {
