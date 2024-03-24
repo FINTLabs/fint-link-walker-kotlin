@@ -69,13 +69,12 @@ class LinkWalker(val requestService: RequestService) {
         }
     }
 
-    fun createEntryReports(task: Task, request: Request): List<EntryReport> {
-        val entryReports: MutableList<EntryReport> = ArrayList()
+    fun createEntryReports(task: Task, request: Request) {
         task.status = Status.CREATING_ENTRY_REPORTS
 
         request._embedded._entries.forEach { entry ->
             val entryReport = createEntryReport(task, entry._links["self"])
-            entryReports.add(entryReport)
+            task.entryReports.add(entryReport)
             entry._links.forEach { (key, links) ->
                 if (task.filter == null || task.filter.contains(key)) {
                     links.forEach {
@@ -85,7 +84,6 @@ class LinkWalker(val requestService: RequestService) {
             }
         }
 
-        return entryReports
     }
 
     fun createEntryReport(task: Task, selfLinks: List<Link>?): EntryReport {
