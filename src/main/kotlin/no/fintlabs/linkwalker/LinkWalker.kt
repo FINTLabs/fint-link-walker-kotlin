@@ -49,6 +49,7 @@ class LinkWalker(val requestService: RequestService) {
                     task.requests.decrementAndGet()
                     if (statusCode.isError) {
                         entryReport.relationErrors.add(RelationError(url, statusCode))
+                        task.relationErrors.add(url)
                     }
                     if (task.isCompleted()) {
                         task.status = Status.COMPLETED
