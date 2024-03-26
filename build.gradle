@@ -22,10 +22,15 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven {
+		url("https://repo.fintlabs.no/releases")
+	}
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	implementation 'no.fintlabs:fint-kafka:4.0.1'
 
 	implementation 'org.apache.poi:poi-ooxml:5.2.5'
 	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
