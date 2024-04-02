@@ -15,7 +15,11 @@ spec:
   port: 8080
   orgId: fintlabs.no
   image: ghcr.io/fintlabs/fint-link-walker-kotlin:latest
-  imagePullPolicy: Always
+  kafka:
+    enabled: true
+    acls:
+      - topic: '*fint-customer-objects.client*'
+        permission: admin
   resources:
     limits:
       memory: 512Mi
