@@ -1,1 +1,2 @@
-spring.application.name=fint-link-walker-kotlin
+fint:
+  application-id: fint-link-walker-kotlin
