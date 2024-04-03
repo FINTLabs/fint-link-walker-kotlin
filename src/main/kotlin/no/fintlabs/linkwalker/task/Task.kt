@@ -10,7 +10,12 @@ import kotlin.collections.ArrayList
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties("token", "entryReports", "relationErrors", "resourceUri")
-class Task(val url: String, var token: String = "", var clientName: String? = null, val filter: List<String>? = null) {
+class Task(
+    val url: String,
+    var token: String = "",
+    var clientName: String? = null,
+    val filter: List<String>? = null
+) {
     var resourceUri = url.substringAfter(".no/")
     var id: String = UUID.randomUUID().toString()
     var org: String? = null
