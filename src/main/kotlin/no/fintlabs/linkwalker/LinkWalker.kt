@@ -16,6 +16,22 @@ import org.springframework.stereotype.Service
 class LinkWalker(val requestService: RequestService, val clientProducer: ClientEventRequestProducerService) {
 
     fun processTaskWithClientName(task: Task) {
+        val get = clientProducer.get(
+            ClientEvent.builder()
+                .orgId(task.org)
+                .client(
+                    Client.builder()
+                        .name(task.clientName)
+                        .build()
+                )
+                .build()
+        )
+
+        if (get.isEmpty) {
+            println("Emptyy")
+        } else {
+            println(get.get().toString())
+        }
         // Fetch client credentials through Kafka
 
         // Fetch bearer token for client

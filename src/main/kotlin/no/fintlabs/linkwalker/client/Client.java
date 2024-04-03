@@ -14,7 +14,6 @@ import java.util.List;
 @EqualsAndHashCode
 public final class Client implements Serializable {
 
-
     @Getter
     private String dn;
 
