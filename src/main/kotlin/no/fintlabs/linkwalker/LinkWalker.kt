@@ -1,5 +1,7 @@
 package no.fintlabs.linkwalker
 
+import no.fintlabs.linkwalker.client.Client
+import no.fintlabs.linkwalker.client.ClientEvent
 import no.fintlabs.linkwalker.client.ClientEventRequestProducerService
 import no.fintlabs.linkwalker.report.EntryReport
 import no.fintlabs.linkwalker.report.RelationError
@@ -14,7 +16,18 @@ import org.springframework.stereotype.Service
 class LinkWalker(val requestService: RequestService, val clientProducer: ClientEventRequestProducerService) {
 
     fun processTaskWithClientName(task: Task) {
-        // Fetch client credentials through Kafka
+        var optionalClient = clientProducer.get(
+            ClientEvent(
+                client = Client(name = task.clientName),
+                orgId = task.org
+            )
+        )
+
+        if (optionalClient.isEmpty) {
+            println("Empty")
+        } else {
+            println(optionalClient.get().toString())
+        }
 
         // Fetch bearer token for client
 

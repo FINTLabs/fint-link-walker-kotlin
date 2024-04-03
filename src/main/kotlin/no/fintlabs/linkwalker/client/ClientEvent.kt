@@ -3,13 +3,12 @@ package no.fintlabs.linkwalker.client
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.util.StringUtils
 
-class ClientEvent {
-
-    val client: Client? = null
-    val orgId: String? = null
-    val operation: Operation? = null
+class ClientEvent(
+    val client: Client? = null,
+    val orgId: String? = null,
+    val operation: Operation? = null,
     val errorMessage: String? = null
-
+) {
 
     fun hasError(): Boolean {
         return StringUtils.hasText(errorMessage)

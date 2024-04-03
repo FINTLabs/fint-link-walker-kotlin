@@ -1,24 +1,20 @@
 package no.fintlabs.linkwalker.client
 
-import lombok.Builder
-import lombok.Getter
-import lombok.Setter
-
-class Client {
-
-    val dn: String? = null
-    val name: String? = null
-    val isManaged = false
-    val shortDescription: String? = null
-    val assetId: String? = null
-    val asset: String? = null
-    val note: String? = null
-    val password: String? = null
-    val clientSecret: String? = null
-    val publicKey: String? = null
-    val clientId: String? = null
-    val components: MutableList<String> = ArrayList()
-    val accessPackages: MutableList<String> = ArrayList()
+class Client(
+    val dn: String? = null,
+    val name: String? = null,
+    val isManaged: Boolean = false,
+    val shortDescription: String? = null,
+    val assetId: String? = null,
+    val asset: String? = null,
+    val note: String? = null,
+    val password: String? = null,
+    val clientSecret: String? = null,
+    val publicKey: String? = null,
+    val clientId: String? = null,
+    val components: MutableList<String> = mutableListOf(),
+    val accessPackages: MutableList<String> = mutableListOf()
+) {
 
     fun addComponent(componentDn: String) {
         if (components.stream().noneMatch { anotherString: String? ->
