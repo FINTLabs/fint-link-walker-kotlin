@@ -1,7 +1,5 @@
 package no.fintlabs.linkwalker
 
-import no.fintlabs.linkwalker.client.Client
-import no.fintlabs.linkwalker.client.ClientEvent
 import no.fintlabs.linkwalker.client.ClientEventRequestProducerService
 import no.fintlabs.linkwalker.report.EntryReport
 import no.fintlabs.linkwalker.report.RelationError
