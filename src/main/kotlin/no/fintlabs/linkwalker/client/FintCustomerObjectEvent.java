@@ -1,4 +1,4 @@
-package no.fintlabs.linkwalker.kafka;
+package no.fintlabs.linkwalker.client;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;

@@ -1,7 +1,6 @@
-package no.fintlabs.linkwalker.kafka;
+package no.fintlabs.linkwalker.client;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 

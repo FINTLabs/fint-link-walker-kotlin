@@ -1,4 +1,4 @@
-package no.fintlabs.linkwalker.kafka;
+package no.fintlabs.linkwalker.client;
 
 
 import no.fintlabs.kafka.common.topic.TopicCleanupPolicyParameters;

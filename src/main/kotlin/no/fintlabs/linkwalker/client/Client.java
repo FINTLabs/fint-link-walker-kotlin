@@ -1,4 +1,4 @@
-package no.fintlabs.linkwalker.kafka;
+package no.fintlabs.linkwalker.client;
 
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
@@ -75,4 +75,11 @@ public final class Client implements Serializable {
         accessPackages.add(accessPackageDn);
     }
 
+//    public String getDn() {
+//        if (dn != null) {
+//            return dn.toString();
+//        } else {
+//            return null;
+//        }
+//    }
 }
