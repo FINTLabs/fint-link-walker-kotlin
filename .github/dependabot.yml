@@ -1,3 +1,7 @@
+# Dependabot is on for this repo. It opens no pull requests for version updates
+# (open-pull-requests-limit: 0), because each push to main deploys this service.
+# Security updates can still open pull requests. Their commit messages have [skip ci],
+# so a squash merge of such a pull request starts no workflow and no deploy.
 version: 2
 registries:
   fintlabs:
@@ -10,80 +14,22 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "monday"
-      time: "06:00"
-      timezone: "Europe/Oslo"
-    open-pull-requests-limit: 5
-    labels:
-      - "dependencies"
-      - "gradle"
+    open-pull-requests-limit: 0
     commit-message:
-      prefix: "deps"
-      include: "scope"
-    groups:
-      spring:
-        patterns:
-          - "org.springframework*"
-          - "org.springdoc*"
-          - "io.spring.gradle:*"
-      kotlin:
-        patterns:
-          - "org.jetbrains.kotlin*"
-          - "org.jetbrains.kotlinx*"
-      fint-novari:
-        patterns:
-          - "no.fint:*"
-          - "no.fintlabs:*"
-          - "no.novari:*"
-      gradle-plugins:
-        patterns:
-          - "com.github.ben-manes.versions"
-          - "se.patrikerdes.use-latest-versions"
-          - "org.jlleitschuh.gradle:*"
-      jackson:
-        patterns:
-          - "com.fasterxml.jackson*"
-      gradle-other-minor-patch:
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
+      prefix: "[skip ci] deps"
 
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "tuesday"
-      time: "06:00"
-      timezone: "Europe/Oslo"
-    open-pull-requests-limit: 5
-    labels:
-      - "dependencies"
-      - "docker"
+    open-pull-requests-limit: 0
     commit-message:
-      prefix: "deps"
-      include: "scope"
-    groups:
-      docker-images:
-        patterns:
-          - "*"
+      prefix: "[skip ci] deps"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "wednesday"
-      time: "06:00"
-      timezone: "Europe/Oslo"
-    open-pull-requests-limit: 5
-    labels:
-      - "dependencies"
-      - "github-actions"
+    open-pull-requests-limit: 0
     commit-message:
-      prefix: "deps"
-      include: "scope"
-    groups:
-      github-actions:
-        patterns:
-          - "*"
+      prefix: "[skip ci] deps"
